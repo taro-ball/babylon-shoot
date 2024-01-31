@@ -17,10 +17,10 @@ export default class GameLogic {
         new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
         new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
 
-        // Create the bullet
-        new Bullet(this.scene);
+        this.bullet = new Bullet(this.scene);
 
         this.engine.runRenderLoop(() => {
+            this.bullet.update(); // Update the bullet's position
             this.scene.render();
         });
     }
