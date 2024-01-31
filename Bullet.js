@@ -22,7 +22,7 @@ export default class Bullet {
         this.mesh.position.y += 0.1;
 
         // Check if 5 seconds have passed
-        if ((Date.now() - this.startTime) >= 5000) {
+        if ((Date.now() - this.startTime) >= 1000) {
             this.dispose();
         }
     }
