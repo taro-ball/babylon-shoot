@@ -62,10 +62,10 @@ export default class GameLogic {
         advancedTexture0.addControl(button);
 
         let mainPanel = advancedTexture.getControlByName("Panel");
-        mainPanel.alpha = 0;
+        mainPanel.isVisible = 0; //alpha = 0;
 
         button.onPointerUpObservable.add(function () {
-            mainPanel.alpha = mainPanel.alpha === 1 ? 0 : 1;
+            mainPanel.isVisible = mainPanel.isVisible === 1 ? 0 : 1;
         });
 
         // Handle mouse click
