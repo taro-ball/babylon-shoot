@@ -53,12 +53,15 @@ export default class GameLogic {
         let advancedTexture0 = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
 
         const button = GUI.Button.CreateSimpleButton('myBtn', 'Menu');
-        button.width = '100px';
-        button.height = '40px';
+        button.width = '80px';
+        button.height = '30px';
+        button.cornerRadius = '5';
         button.color = 'white';
+        button.background = 'MidnightBlue';
+
         button.horizontalAlignment = "left"
         button.verticalAlignment = "top"
-        button.background = 'deepskyblue';
+
         advancedTexture0.addControl(button);
 
         let mainPanel = advancedTexture.getControlByName("Panel");
