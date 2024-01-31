@@ -34,7 +34,7 @@ export default class GameLogic {
 
         //Setup
         this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
-        this.fastBulletBlueprint = new BulletBlueprint('sphere', null, 0.1, 0.1, 1400);
+        this.fastBulletBlueprint = new BulletBlueprint('sphere', null, 0.02, 0.005, 0.1, 1400);
 
         this._createPracticeTargets();
 
