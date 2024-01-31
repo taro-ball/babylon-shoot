@@ -1,5 +1,8 @@
 // GameLogic.js
 import * as BABYLON from '@babylonjs/core';
+import * as GUI from '@babylonjs/gui';
+import { Inspector } from '@babylonjs/inspector';
+
 import { Bullet, BulletBlueprint } from './Bullet.js';
 
 export default class GameLogic {
@@ -11,7 +14,7 @@ export default class GameLogic {
         this._init();
     }
 
-    _init() {
+    async _init() {
         //background
         this.scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1, 1);
 
@@ -26,6 +29,20 @@ export default class GameLogic {
         this.glowLayer = new BABYLON.GlowLayer("glow", this.scene);
         this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
 
+        // // Load a GUI from a URL JSON.
+        let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, this.scene);
+        let loadedGUI = await advancedTexture.parseFromURLAsync("GUI/gui1.json");
+
+        let sliderX = advancedTexture.getControlByName("RotationXSlider");
+        sliderX.onValueChangedObservable.add(function (value) {
+            mybox.rotation.x = value / 50;
+            mybox.position.x = value / 50;
+            //this.fastBulletBlueprint.diameter = value;
+            console.log(value)
+        })
+
+        const mybox = BABYLON.MeshBuilder.CreateBox('', { size: 2 }, this.scene);
+
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
             //console.log('Canvas clicked');
@@ -34,7 +51,7 @@ export default class GameLogic {
 
         //Setup
         this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
-        this.fastBulletBlueprint = new BulletBlueprint('sphere', null, 0.02, 0.005, 0.1, 1400);
+        this.fastBulletBlueprint = new BulletBlueprint('sphere', undefined, 0.02, 0.005, 0.1, 1400);
 
         this._createPracticeTargets();
 
@@ -45,6 +62,8 @@ export default class GameLogic {
             //this.bullets = this.bullets.filter(bullet => bullet.mesh); // Remove disposed bullets
             this.scene.render();
         });
+
+        Inspector.Show(this.scene, {});
     }
 
     _shootBullet(event) {
@@ -75,6 +94,7 @@ export default class GameLogic {
             material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random()); // Random color
             box.material = material;
         }
+
     }
 
     update() {

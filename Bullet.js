@@ -99,7 +99,7 @@ export class Bullet {
         //this.dispose();
         console.log("boom!");
         if (this.mesh) {
-            console.log("dispose");
+            //console.log("dispose");
             this.mesh.dispose();
             this.mesh = null;
         }
