@@ -29,18 +29,19 @@ export default class GameLogic {
         this.glowLayer = new BABYLON.GlowLayer("glow", this.scene);
         this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
 
+
+
         // // Load a GUI from a URL JSON.
         let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, this.scene);
         let loadedGUI = await advancedTexture.parseFromURLAsync("GUI/gui1.json");
 
         let sliderX = advancedTexture.getControlByName("RotationXSlider");
-        let whole = advancedTexture.getControlByName("Panel");
         sliderX.onValueChangedObservable.add((value) => {
             //console.log("advancedTexture!", advancedTexture);
             let testMesh = this.scene.getNodeByName("box1");
             testMesh.rotation.x = value / 50;
             testMesh.position.x = value / 50;
-            whole.alpha = 0;
+
             // advancedTexture.isVisible = false;
             //loadedGUI.layer = -1
             //loadedGUI.dispose()
@@ -48,6 +49,24 @@ export default class GameLogic {
             //console.log(value);
         });
 
+        //toggle GUI
+        let advancedTexture0 = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+
+        const button = GUI.Button.CreateSimpleButton('myBtn', 'Menu');
+        button.width = '100px';
+        button.height = '40px';
+        button.color = 'white';
+        button.horizontalAlignment = "left"
+        button.verticalAlignment = "top"
+        button.background = 'deepskyblue';
+        advancedTexture0.addControl(button);
+
+        let mainPanel = advancedTexture.getControlByName("Panel");
+        mainPanel.alpha = 0;
+
+        button.onPointerUpObservable.add(function () {
+            mainPanel.alpha = mainPanel.alpha === 1 ? 0 : 1;
+        });
 
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
