@@ -45,7 +45,7 @@ export default class GameLogic {
         console.log("shhot started");
         if (pickResult.hit) {
             const targetPoint = pickResult.pickedPoint;
-            const cameraPosition = this.scene.activeCamera.position; // Starting position of the bullet (from the camera)
+            const cameraPosition = new BABYLON.Vector3(0, 0, 0);
             const direction = targetPoint.subtract(cameraPosition);
             direction.normalize();
 
