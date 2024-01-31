@@ -6,7 +6,7 @@ export default class Bullet {
         this.scene = scene;
         this.position = initialPosition;
         this.direction = direction;
-        this.speed = 1; // Speed of the bullet
+        this.speed = 0.1; // Speed of the bullet
         this._init();
         this.startTime = Date.now();
     }
@@ -22,10 +22,11 @@ export default class Bullet {
 
     update() {
         // Make the bullet fly upwards
-        this.mesh.position.y += 0.1;
+        //this.mesh.position.y += 0.1;
+        this.mesh.position.addInPlace(this.direction.scale(this.speed));
 
         // Check if 5 seconds have passed
-        if ((Date.now() - this.startTime) >= 1000) {
+        if ((Date.now() - this.startTime) >= 1500) {
             this.dispose();
         }
     }
