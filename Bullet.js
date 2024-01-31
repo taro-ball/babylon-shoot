@@ -3,7 +3,7 @@ import * as BABYLON from '@babylonjs/core';
 export class BulletBlueprint {
     constructor(shapeType = 'sphere', color = null, speed = 0.1, diameter = 0.2, lifespan = 1400) {
         this.shapeType = shapeType;
-        this.color = color || new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+        this.color = color;
         this.speed = speed;
         this.diameter = diameter;
         this.lifespan = lifespan;
@@ -35,9 +35,10 @@ export class Bullet {
         // Additional shape types can be added here
 
         this.mesh.position = this.position;
-
+        this.color = this.blueprint.color || new BABYLON.Color3(Math.random(), Math.random(), Math.random())
         let material = new BABYLON.StandardMaterial("bulletMaterial", this.scene);
-        material.diffuseColor = this.blueprint.color;
+        material.diffuseColor = this.color;
+        material.emissiveColor = this.color;
         this.mesh.material = material;
     }
 

@@ -12,12 +12,19 @@ export default class GameLogic {
     }
 
     _init() {
+        //background
+        this.scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1, 1); 
+
         // Create a camera and point it to the center of the scene
         const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
         camera.attachControl(this.canvas, true);
 
         // Create a light
         new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
+
+        // add glow
+        this.glowLayer = new BABYLON.GlowLayer("glow", this.scene);
+        this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
 
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
@@ -26,7 +33,8 @@ export default class GameLogic {
         });
 
         //Setup
-        this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 1400);
+        this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
+        this.fastBulletBlueprint = new BulletBlueprint('sphere', null, 0.1, 0.1, 1400);
 
         this._createPracticeTargets();
 
@@ -49,7 +57,7 @@ export default class GameLogic {
 
             console.log("shhot at:", direction);
 
-            const bullet = new Bullet(this.scene, bulletStartPosition, direction, this.blueBulletBlueprint);
+            const bullet = new Bullet(this.scene, bulletStartPosition, direction, this.fastBulletBlueprint);
             this.bullets.push(bullet);
             console.log("Bullet created", bullet);
         }
