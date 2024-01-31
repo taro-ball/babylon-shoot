@@ -21,15 +21,12 @@ export default class GameLogic {
 
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
-            console.log('Canvas clicked');
+            //console.log('Canvas clicked');
             this._shootBullet(event);
         });
 
-
-
-        //test obj
-
-        this._createTargets();
+        //Test Targets
+        this._createPracticeTargets();
 
         // Run the render loop
         this.engine.runRenderLoop(() => {
@@ -42,7 +39,6 @@ export default class GameLogic {
     _shootBullet(event) {
         // Use a ray from the camera to the click position to determine the direction
         const pickResult = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
-        console.log("shhot started");
         if (pickResult.hit) {
             const targetPoint = pickResult.pickedPoint;
             const cameraPosition = new BABYLON.Vector3(0, 0, 0);
@@ -57,7 +53,7 @@ export default class GameLogic {
         }
     }
 
-    _createTargets() {
+    _createPracticeTargets() {
         const numberOfTargets = 5; // Change as per need
         for (let i = 0; i < numberOfTargets; i++) {
             const size = Math.random() * 0.5 + 0.5; // Random size between 0.5 and 1

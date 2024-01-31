@@ -16,17 +16,15 @@ export default class Bullet {
         this.mesh.position = this.position;
 
         let material = new BABYLON.StandardMaterial("bulletMaterial", this.scene);
-        material.diffuseColor = new BABYLON.Color3(0, 0, 1); // Blue
+        //material.diffuseColor = new BABYLON.Color3(0, 0, 1); // Blue
+        material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
         this.mesh.material = material;
     }
 
     update() {
-        // Make the bullet fly upwards
-        //this.mesh.position.y += 0.1;
         this.mesh.position.addInPlace(this.direction.scale(this.speed));
 
-        // Check if 5 seconds have passed
-        if ((Date.now() - this.startTime) >= 1500) {
+        if ((Date.now() - this.startTime) >= 1400) {
             this.dispose();
         }
     }
