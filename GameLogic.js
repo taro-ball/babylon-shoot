@@ -34,11 +34,16 @@ export default class GameLogic {
         let loadedGUI = await advancedTexture.parseFromURLAsync("GUI/gui1.json");
 
         let sliderX = advancedTexture.getControlByName("RotationXSlider");
+        let whole = advancedTexture.getControlByName("Panel");
         sliderX.onValueChangedObservable.add((value) => {
-            console.log("scene!", this.scene);
+            //console.log("advancedTexture!", advancedTexture);
             let testMesh = this.scene.getNodeByName("box1");
             testMesh.rotation.x = value / 50;
             testMesh.position.x = value / 50;
+            whole.alpha = 0;
+            // advancedTexture.isVisible = false;
+            //loadedGUI.layer = -1
+            //loadedGUI.dispose()
             // this.fastBulletBlueprint.diameter = value;
             //console.log(value);
         });
