@@ -1,6 +1,6 @@
 // GameLogic.js
 import * as BABYLON from '@babylonjs/core';
-import Bullet from './Bullet.js';
+import { Bullet, BulletBlueprint } from './Bullet.js';
 
 export default class GameLogic {
     constructor(canvas) {
@@ -25,7 +25,9 @@ export default class GameLogic {
             this._shootBullet(event);
         });
 
-        //Test Targets
+        //Setup
+        this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 1400);
+
         this._createPracticeTargets();
 
         // Run the render loop
@@ -41,13 +43,13 @@ export default class GameLogic {
         const pickResult = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
         if (pickResult.hit) {
             const targetPoint = pickResult.pickedPoint;
-            const cameraPosition = new BABYLON.Vector3(0, 0, 0);
-            const direction = targetPoint.subtract(cameraPosition);
+            const bulletStartPosition = new BABYLON.Vector3(0, 0, 0);
+            const direction = targetPoint.subtract(bulletStartPosition);
             direction.normalize();
 
             console.log("shhot at:", direction);
 
-            const bullet = new Bullet(this.scene, cameraPosition, direction);
+            const bullet = new Bullet(this.scene, bulletStartPosition, direction, this.blueBulletBlueprint);
             this.bullets.push(bullet);
             console.log("Bullet created", bullet);
         }
