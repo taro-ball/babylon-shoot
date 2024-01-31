@@ -34,14 +34,15 @@ export default class GameLogic {
         let loadedGUI = await advancedTexture.parseFromURLAsync("GUI/gui1.json");
 
         let sliderX = advancedTexture.getControlByName("RotationXSlider");
-        sliderX.onValueChangedObservable.add(function (value) {
-            mybox.rotation.x = value / 50;
-            mybox.position.x = value / 50;
-            //this.fastBulletBlueprint.diameter = value;
-            console.log(value)
-        })
+        sliderX.onValueChangedObservable.add((value) => {
+            console.log("scene!", this.scene);
+            let testMesh = this.scene.getNodeByName("box1");
+            testMesh.rotation.x = value / 50;
+            testMesh.position.x = value / 50;
+            // this.fastBulletBlueprint.diameter = value;
+            //console.log(value);
+        });
 
-        const mybox = BABYLON.MeshBuilder.CreateBox('', { size: 2 }, this.scene);
 
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
