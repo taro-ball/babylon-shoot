@@ -15,13 +15,13 @@ export class BulletBlueprint {
 }
 
 export class Bullet {
-    constructor(scene, initialPosition, direction, blueprint) {
+    constructor(scene, initialPosition, target, blueprint) {
         this.scene = scene;
         this.position = initialPosition;
-        this.direction = direction;
+        this.target = target;
         this.blueprint = blueprint;
         this.startTime = Date.now();
-
+        this.toBeRemoved = false;
         this._init();
     }
 
@@ -43,17 +43,34 @@ export class Bullet {
     }
 
     update() {
-        this.mesh.position.addInPlace(this.direction.scale(this.blueprint.speed));
+
+        let direction = this.target.position.subtract(this.position).normalize();
+
+        this.mesh.position.addInPlace(direction.scale(this.blueprint.speed));
+
+        // Check for collisions
+        this.checkCollision();
+
 
         if ((Date.now() - this.startTime) >= this.blueprint.lifespan) {
-            this.dispose();
+            this.toBeRemoved = true;
+        }
+
+
+    }
+
+    checkCollision() {
+        const distance = BABYLON.Vector3.Distance(this.mesh.position, this.target.position);
+        const collisionThreshold = 0.2; // Adjust based on your target and bullet size
+
+        if (distance < collisionThreshold) {
+            this.hit(); // Dispose of the bullet
+            // Optional: Do something with the target
+            // e.g., this.target.dispose();
         }
     }
 
-    dispose() {
-        if (this.mesh) {
-            this.mesh.dispose();
-            this.mesh = null;
-        }
+    hit() {
+        this.toBeRemoved = true;
     }
 }

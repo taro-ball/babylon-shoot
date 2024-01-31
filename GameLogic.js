@@ -13,7 +13,7 @@ export default class GameLogic {
 
     _init() {
         //background
-        this.scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1, 1); 
+        this.scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1, 1);
 
         // Create a camera and point it to the center of the scene
         const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
@@ -40,24 +40,23 @@ export default class GameLogic {
 
         // Run the render loop
         this.engine.runRenderLoop(() => {
+            this.update();
             this.bullets.forEach(bullet => bullet.update());
-            this.bullets = this.bullets.filter(bullet => bullet.mesh); // Remove disposed bullets
+            //this.bullets = this.bullets.filter(bullet => bullet.mesh); // Remove disposed bullets
             this.scene.render();
         });
     }
 
     _shootBullet(event) {
-        // Use a ray from the camera to the click position to determine the direction
+        // Use a ray from the camera to the click position to determine if a target is clicked
         const pickResult = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
-        if (pickResult.hit) {
-            const targetPoint = pickResult.pickedPoint;
-            const bulletStartPosition = new BABYLON.Vector3(0, 0, 0);
-            const direction = targetPoint.subtract(bulletStartPosition);
-            direction.normalize();
+        if (pickResult.hit && pickResult.pickedMesh) {
+            const pickedTarget = pickResult.pickedMesh; // The target mesh that was clicked
 
-            console.log("shhot at:", direction);
+            const bulletStartPosition = new BABYLON.Vector3(0, 0, 0); // Starting position of the bullet, adjust as needed
 
-            const bullet = new Bullet(this.scene, bulletStartPosition, direction, this.fastBulletBlueprint);
+            // Create a bullet that aims at the picked target
+            const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, this.fastBulletBlueprint);
             this.bullets.push(bullet);
             console.log("Bullet created", bullet);
         }
@@ -77,4 +76,12 @@ export default class GameLogic {
             box.material = material;
         }
     }
+
+    update() {
+
+        // Remove bullets marked for removal
+        this.bullets = this.bullets.filter(bullet => !bullet.toBeRemoved);
+
+    }
+
 }
