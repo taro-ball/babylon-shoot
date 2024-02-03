@@ -5,7 +5,7 @@
 1. Have fun! :D
 
 PS  
-if you are on Windows like me, highly recommend to use nvm-windows to install node:
+if you are on Windows like me, highly recommend to use nvm-windows to install node [detailed instructions](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows):
 1. download and install nvm (https://github.com/coreybutler/nvm-windows/releases)
 2. `nvm install latest`
 3. `nvm ls`
