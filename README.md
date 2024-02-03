@@ -2,7 +2,7 @@
 1. Install dependencies: `npm install`
 1. Run local server: `npm run dev`
 1. Ctrl + left click on the address generated in the command line.
-1. Have fun! :D
+1. Click on the targets to shoot bullets at them :D
 
 PS  
 if you are on Windows like me, highly recommend to use nvm-windows to install node [detailed instructions](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows):
