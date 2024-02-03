@@ -49,6 +49,14 @@ export default class GameLogic {
             //console.log(value);
         });
 
+        let sliderY = advancedTexture.getControlByName("RotationYSlider");
+        sliderY.onValueChangedObservable.add((value) => {
+            //console.log("advancedTexture!", advancedTexture);
+            let testMesh = this.scene.getNodeByName("box2");
+            testMesh.rotation.x = value / 50;
+            testMesh.position.x = value / 50;
+        });
+        
         //toggle GUI
         let advancedTexture0 = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
 
