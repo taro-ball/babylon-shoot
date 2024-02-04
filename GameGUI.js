@@ -8,9 +8,6 @@ export default class GameGUI {
     }
 
     async _initGUI() {
-        // ... all your GUI code ...
-        // Remember to replace this.advancedTexture and this.scene
-        // with the actual references passed in the constructor
 
         let loadedGUI = await this.advancedTexture.parseFromURLAsync("GUI/gui1.json");
 
@@ -20,12 +17,6 @@ export default class GameGUI {
             let testMesh = this.scene.getNodeByName("box1");
             testMesh.rotation.x = value / 50;
             testMesh.position.x = value / 50;
-
-            // this.advancedTexture.isVisible = false;
-            //loadedGUI.layer = -1
-            //loadedGUI.dispose()
-            // this.fastBulletBlueprint.diameter = value;
-            //console.log(value);
         });
 
         let sliderY = this.advancedTexture.getControlByName("RotationYSlider");
@@ -36,8 +27,11 @@ export default class GameGUI {
             testMesh.position.y = value / 50;
         });
 
-        //toggle GUI
-        let advancedTexture0 = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+        let mainPanel = this.advancedTexture.getControlByName("Panel");
+        mainPanel.isVisible = 0; //hide main pannel
+
+        //toggle button
+        //let advancedTexture0 = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
 
         const button = GUI.Button.CreateSimpleButton('myBtn', 'Menu');
         button.width = '80px';
@@ -45,19 +39,13 @@ export default class GameGUI {
         button.cornerRadius = '5';
         button.color = 'white';
         button.background = 'MidnightBlue';
-
         button.horizontalAlignment = "left"
         button.verticalAlignment = "top"
 
-        advancedTexture0.addControl(button);
-
-        let mainPanel = this.advancedTexture.getControlByName("Panel");
-        mainPanel.isVisible = 0; //alpha = 0;
-
+        this.advancedTexture.addControl(button);
+        
         button.onPointerUpObservable.add(function () {
             mainPanel.isVisible = mainPanel.isVisible === 1 ? 0 : 1;
         });
     }
-
-    // Add other GUI-related methods here if needed
 }

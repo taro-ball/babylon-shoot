@@ -28,11 +28,8 @@ export default class GameLogic {
         // add glow
         this.glowLayer = new BABYLON.GlowLayer("glow", this.scene);
         this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
-
-
         
-        // // Load a GUI from a URL JSON.
-        
+        //Load GUI from GameLogic.js
         this.gameGUI = new GameGUI(this.scene); // Initialize your GUI here
 
         // Handle mouse click
