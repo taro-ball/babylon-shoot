@@ -1,12 +1,10 @@
 import * as BABYLON from '@babylonjs/core';
 
 export class BulletBlueprint {
-    constructor(shapeType = 'sphere', color = null, speed = 0.1, acceleration = 0.005, diameter = 0.2, lifespan = 1400, createShapeFunc) {
-        this.shapeType = shapeType;
-        this.color = color;
+    constructor( speed = 0.1, acceleration = 0.005, size = 0.2, lifespan = 1400, createShapeFunc) {
         this.speed = speed;
         this.acceleration = acceleration;
-        this.diameter = diameter;
+        this.size = size;
         this.lifespan = lifespan;
         this.createShapeFunc = createShapeFunc;
     }
@@ -31,27 +29,13 @@ export class Bullet {
     }
 
     _init() {
-        // if (this.blueprint.shapeType === 'sphere') {
-        //     this.mesh = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: this.blueprint.diameter }, this.scene);
-        // } else if (this.blueprint.shapeType === 'custom') {
-        //     // Load custom shape from .glx file (if blueprint.shape is a path to a file)
-        //     this.blueprint.loadShapeFromGLX(this.scene, this.blueprint.shape);
-        // }
+
         this.mesh = this.blueprint.createShapeFunc(this.scene, this.blueprint);
         this.mesh.position = this.position;
-
-        // this.color = this.blueprint.color || new BABYLON.Color3(Math.random(), Math.random(), Math.random())
-        // let material = new BABYLON.StandardMaterial("bulletMaterial", this.scene);
-        // material.diffuseColor = this.color;
-        // material.emissiveColor = this.color;
-        // this.mesh.material = material;
 
         // init velocity
         let direction = this.target.position.subtract(this.position).normalize();
         this.velocity.addInPlace(direction.scale(this.blueprint.speed));
-
-
-
     }
 
     update() {

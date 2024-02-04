@@ -43,11 +43,11 @@ export default class GameLogic {
         // this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
         // this.fastBulletBlueprint = new BulletBlueprint('sphere', undefined, 0.02, 0.005, 0.1, 1400);
 
-        this.fastBulletBlueprint = new BulletBlueprint('sphere', null, 0.02, 0.005, 0.4, 1400, (scene, blueprint) => {
+        this.fastBulletBlueprint = new BulletBlueprint(0.02, 0.005, 0.2, 1400, (scene, blueprint) => {
             let mesh;
 
             //mesh = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: blueprint.diameter }, scene);
-            mesh = BABYLON.MeshBuilder.CreateBox("bullet", { size: blueprint.diameter }, scene);
+            mesh = BABYLON.MeshBuilder.CreateBox("bullet", { size: blueprint.size }, scene);
             // Additional shape types can be added here
 
             let myColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random())
