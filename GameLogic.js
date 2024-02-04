@@ -4,7 +4,8 @@ import * as BABYLON from '@babylonjs/core';
 import { Inspector } from '@babylonjs/inspector';
 
 import GameGUI from './GameGUI.js';
-import { Bullet, BulletBlueprint } from './Bullet.js';
+import { Bullet } from './Bullet.js';
+import * as BulletBlueprints from './BulletBlueprints.js';
 
 export default class GameLogic {
     constructor(canvas) {
@@ -39,24 +40,6 @@ export default class GameLogic {
             this._shootBullet(event);
         });
 
-        //Setup
-        // this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
-        // this.fastBulletBlueprint = new BulletBlueprint('sphere', undefined, 0.02, 0.005, 0.1, 1400);
-
-        this.fastBulletBlueprint = new BulletBlueprint(0.02, 0.005, 0.2, 1400, (scene, blueprint) => {
-            let mesh;
-
-            //mesh = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: blueprint.diameter }, scene);
-            mesh = BABYLON.MeshBuilder.CreateBox("bullet", { size: blueprint.size }, scene);
-            // Additional shape types can be added here
-
-            let myColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random())
-            let material = new BABYLON.StandardMaterial("bulletMaterial", scene);
-            material.diffuseColor = myColor;
-            material.emissiveColor = myColor;
-            mesh.material = material;
-            return mesh;
-        });
 
         this._createPracticeTargets();
 
@@ -80,7 +63,7 @@ export default class GameLogic {
             const bulletStartPosition = new BABYLON.Vector3(0, 0, 0); // Starting position of the bullet, adjust as needed
 
             // Create a bullet that aims at the picked target
-            const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, this.fastBulletBlueprint);
+            const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, BulletBlueprints.CubeBullet2);
             this.bullets.push(bullet);
             console.log("Bullet created", bullet);
         }
