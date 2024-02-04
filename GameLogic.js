@@ -2,7 +2,7 @@
 import * as BABYLON from '@babylonjs/core';
 import * as GUI from '@babylonjs/gui';
 import { Inspector } from '@babylonjs/inspector';
-
+import GameGUI from './GameGUI.js'; // Import GameGUI
 import { Bullet, BulletBlueprint } from './Bullet.js';
 
 export default class GameLogic {
@@ -30,54 +30,10 @@ export default class GameLogic {
         this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
 
 
-
+        
         // // Load a GUI from a URL JSON.
-        let advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, this.scene);
-        let loadedGUI = await advancedTexture.parseFromURLAsync("GUI/gui1.json");
-
-        let sliderX = advancedTexture.getControlByName("RotationXSlider");
-        sliderX.onValueChangedObservable.add((value) => {
-            //console.log("advancedTexture!", advancedTexture);
-            let testMesh = this.scene.getNodeByName("box1");
-            testMesh.rotation.x = value / 50;
-            testMesh.position.x = value / 50;
-
-            // advancedTexture.isVisible = false;
-            //loadedGUI.layer = -1
-            //loadedGUI.dispose()
-            // this.fastBulletBlueprint.diameter = value;
-            //console.log(value);
-        });
-
-        let sliderY = advancedTexture.getControlByName("RotationYSlider");
-        sliderY.onValueChangedObservable.add((value) => {
-            //console.log("advancedTexture!", advancedTexture);
-            let testMesh = this.scene.getNodeByName("box2");
-            testMesh.rotation.y = value / 50;
-            testMesh.position.y = value / 50;
-        });
-
-        //toggle GUI
-        let advancedTexture0 = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
-
-        const button = GUI.Button.CreateSimpleButton('myBtn', 'Menu');
-        button.width = '80px';
-        button.height = '30px';
-        button.cornerRadius = '5';
-        button.color = 'white';
-        button.background = 'MidnightBlue';
-
-        button.horizontalAlignment = "left"
-        button.verticalAlignment = "top"
-
-        advancedTexture0.addControl(button);
-
-        let mainPanel = advancedTexture.getControlByName("Panel");
-        mainPanel.isVisible = 0; //alpha = 0;
-
-        button.onPointerUpObservable.add(function () {
-            mainPanel.isVisible = mainPanel.isVisible === 1 ? 0 : 1;
-        });
+        
+        this.gameGUI = new GameGUI(this.scene); // Initialize your GUI here
 
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
