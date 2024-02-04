@@ -4,8 +4,11 @@ export class Spaceship {
     constructor(scene, name, position) {
         this.scene = scene;
         this.name = name;
-        this.position = position || new BABYLON.Vector3.Zero();
-        this.speed = 1;
+        this.position = position || new BABYLON.Vector3(0, 0, 0);
+        this.velocity = new BABYLON.Vector3(0, 0, 0);
+        this.acceleration = new BABYLON.Vector3(0, 0, 0);
+        this.maxSpeed = 0.1;
+        this.inertia = 0.91;
         this.mesh = null;
 
         this._init();
@@ -30,38 +33,40 @@ export class Spaceship {
         }));
 
         this.scene.onBeforeRenderObservable.add(() => {
+            this.acceleration = new BABYLON.Vector3(0, 0, 0); // Reset acceleration each frame
+
+            // Adjust acceleration based on input
             if (inputMap["w"] || inputMap["W"]) {
-                this.moveForward();
+                this.acceleration.y += 1;
             }
             if (inputMap["s"] || inputMap["S"]) {
-                this.moveBackward();
+                this.acceleration.y -= 1;
             }
             if (inputMap["a"] || inputMap["A"]) {
-                this.moveLeft();
+                this.acceleration.x += 1;
             }
             if (inputMap["d"] || inputMap["D"]) {
-                this.moveRight();
+                this.acceleration.x -= 1;
             }
         });
     }
 
-    moveForward() {
-        this.mesh.position.y -= this.speed;
-    }
-
-    moveBackward() {
-        this.mesh.position.y += this.speed;
-    }
-
-    moveLeft() {
-        this.mesh.position.x -= this.speed;
-    }
-
-    moveRight() {
-        this.mesh.position.x += this.speed;
-    }
-
     update() {
-        // Implement any continuous behavior or controls here
+        // Apply acceleration to velocity
+        this.velocity.addInPlace(this.acceleration);
+        
+        // Clamp velocity to max speed
+        if (this.velocity.length() > this.maxSpeed) {
+            this.velocity.normalize().scaleInPlace(this.maxSpeed);
+        }
+
+        // Apply velocity to position
+        this.mesh.position.addInPlace(this.velocity);
+
+        // Apply inertia to slow down the spaceship
+        this.velocity.scaleInPlace(this.inertia);
+        
+        // Reset acceleration (optional, if you want acceleration to be applied continuously, remove this line)
+        this.acceleration = new BABYLON.Vector3(0, 0, 0);
     }
 }
