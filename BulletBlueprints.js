@@ -1,3 +1,4 @@
+//BulletBlueprints.js
 import * as BABYLON from '@babylonjs/core';
 import { BulletBlueprint } from './Bullet.js';
 
@@ -41,24 +42,13 @@ export const CubeBullet1 = new BulletBlueprint(
         // Begin animation
         scene.beginAnimation(mesh, 0, 15, true);
 
-        return mesh;
-    }
-);
+        //Play sound
+        let shootingSound = new BABYLON.Sound("ShootingSound", "assets/pop.mp3", scene, null, {
+            autoplay: true,  // automatically start playing
+            spatialSound: true  // 3D sound to be played in space (optional)
+        });
+        shootingSound.setPosition(mesh.position);
 
-export const CubeBullet2 = new BulletBlueprint(
-    0.04,
-    0.00,
-    0.1,
-    3300,
-    (scene, blueprint) => {
-        let mesh;
-        mesh = BABYLON.MeshBuilder.CreateBox("bullet", { size: blueprint.size }, scene);
-
-        let myColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-        let material = new BABYLON.StandardMaterial("bulletMaterial", scene);
-        material.diffuseColor = myColor;
-        material.emissiveColor = myColor;
-        mesh.material = material;
         return mesh;
     }
 );

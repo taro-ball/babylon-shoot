@@ -4,9 +4,9 @@ import * as BABYLON from '@babylonjs/core';
 import { Inspector } from '@babylonjs/inspector';
 
 import GameGUI from './GameGUI.js';
-import { Bullet } from './Bullet.js';
+//import { Bullet } from './Bullet.js';
 import { Spaceship } from './Spaceship.js';
-import * as BulletBlueprints from './BulletBlueprints.js';
+//import * as BulletBlueprints from './BulletBlueprints.js';
 
 export default class GameLogic {
     constructor(canvas) {
@@ -40,8 +40,8 @@ export default class GameLogic {
         //const spaceship = new Spaceship(this.scene, "mySpaceship", new BABYLON.Vector3(0, 0, 0));
 
         // Handle mouse click
-        this.canvas.addEventListener('click', (event) => {
-            //console.log('Canvas clicked');
+        this.canvas.addEventListener('pointerdown', (event) => {
+            console.log('Canvas clicked');
             this._shootBullet(event);
         });
 
@@ -66,7 +66,7 @@ export default class GameLogic {
         if (pickResult.hit && pickResult.pickedMesh) {
             const pickedTarget = pickResult.pickedMesh; // The target mesh that was clicked
 
-            const bulletStartPosition = new BABYLON.Vector3(0, 0, 0); // Starting position of the bullet, adjust as needed
+            //const bulletStartPosition = new BABYLON.Vector3(0, 0, 0); // Starting position of the bullet, adjust as needed
 
             // Create a bullet that aims at the picked target
             //const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, BulletBlueprints.CubeBullet1);
