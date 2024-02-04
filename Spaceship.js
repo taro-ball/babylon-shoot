@@ -18,7 +18,34 @@ export class Spaceship {
     }
 
     _init() {
-        this.mesh = BABYLON.MeshBuilder.CreateBox(this.name, { size: 1 }, this.scene);
+        this.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {
+            diameter: 0.5,
+            segments: 1
+        }, this.scene);
+
+
+
+        // Create a PBR material
+        const pbrMaterial = new BABYLON.PBRMaterial("pbr", this.scene);
+        this.mesh.material = pbrMaterial;
+
+        // Make it metallic and shiny
+        pbrMaterial.metallic = 1.0; // 0: non-metallic, 1: metallic
+        pbrMaterial.roughness = 0.1; // 0: smooth, 1: rough
+
+        // Improve the shininess by adjusting the microSurface
+        pbrMaterial.microSurface = 0.9; // Control the sharpness of the reflections
+
+        // Add a subtle color to the material to simulate realistic metal
+        pbrMaterial.albedoColor = new BABYLON.Color3(0.01, 0.95, 0.01);
+        pbrMaterial.emissiveColor = new BABYLON.Color3(0.3, 0, 0);
+
+        // Add reflection to the material for additional shininess without a texture
+        pbrMaterial.reflectivityColor = new BABYLON.Color3(0.95, 0.95, 0.95);
+        pbrMaterial.reflectionColor = new BABYLON.Color3(0.95, 0.95, 0.95);
+        pbrMaterial.wireframe = true;
+
+
         this.mesh.position = this.position;
     }
 
