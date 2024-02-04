@@ -15,6 +15,7 @@ export const CubeBullet1 = new BulletBlueprint(
         let material = new BABYLON.StandardMaterial("bulletMaterial", scene);
         material.diffuseColor = myColor;
         material.emissiveColor = myColor;
+        material.wireframe = true;
         mesh.material = material;
 
         // Animation

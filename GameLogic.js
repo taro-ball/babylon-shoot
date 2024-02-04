@@ -80,6 +80,7 @@ export default class GameLogic {
 
             const material = new BABYLON.StandardMaterial(`material${i}`, this.scene);
             material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random()); // Random color
+            material.wireframe = true;
             box.material = material;
         }
 
