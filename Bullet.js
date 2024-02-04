@@ -8,10 +8,6 @@ export class BulletBlueprint {
         this.lifespan = lifespan;
         this.createShapeFunc = createShapeFunc;
     }
-
-    loadShapeFromGLX(scene, filePath) {
-        // Implement the logic to load a shape from a .glx file and assign it to this.shape
-    }
 }
 
 export class Bullet {
@@ -41,9 +37,6 @@ export class Bullet {
     update() {
 
 
-        // let direction = this.target.position.subtract(this.position).normalize();
-        // this.mesh.position.addInPlace(direction.scale(this.blueprint.speed));
-
         let direction = this.target.position.subtract(this.position).normalize();
 
         // Update the bullet's velocity vector based on its speed and direction
@@ -64,7 +57,7 @@ export class Bullet {
     }
 
     checkCollision() {
-
+        // if the target is behind us, we must have hit it
         let deltaPos = this.velocity.dot(this.mesh.position.subtract(this.target.position))
         //console.log(pos)
         if (deltaPos > 0) {
@@ -83,7 +76,6 @@ export class Bullet {
 
     explode() {
         //this.target.dispose();
-        //this.dispose();
         console.log("boom!");
         if (this.mesh) {
             //console.log("dispose");

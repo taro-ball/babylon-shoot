@@ -4,9 +4,9 @@ import { BulletBlueprint } from './Bullet.js';
 // FastBulletBlueprint declaration
 export const CubeBullet1 = new BulletBlueprint(
     0.02,
-    0.005,
+    0.001,
     0.2,
-    1400,
+    2222,
     (scene, blueprint) => {
         let mesh;
         mesh = BABYLON.MeshBuilder.CreateBox("bullet", { size: blueprint.size }, scene);
@@ -16,6 +16,30 @@ export const CubeBullet1 = new BulletBlueprint(
         material.diffuseColor = myColor;
         material.emissiveColor = myColor;
         mesh.material = material;
+
+        // Animation
+        let animation = new BABYLON.Animation("xRotation", "rotation.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+        // Animation keys
+        let keys = [];
+        keys.push({
+            frame: 0,
+            value: 0
+        });
+        keys.push({
+            frame: 15,
+            value: 2 * Math.PI
+        });
+
+        // Link animation keys to the animation
+        animation.setKeys(keys);
+
+        // Attach the animation to the mesh
+        mesh.animations.push(animation);
+
+        // Begin animation
+        scene.beginAnimation(mesh, 0, 15, true);
+
         return mesh;
     }
 );

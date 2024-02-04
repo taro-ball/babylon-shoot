@@ -63,7 +63,7 @@ export default class GameLogic {
             const bulletStartPosition = new BABYLON.Vector3(0, 0, 0); // Starting position of the bullet, adjust as needed
 
             // Create a bullet that aims at the picked target
-            const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, BulletBlueprints.CubeBullet2);
+            const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, BulletBlueprints.CubeBullet1);
             this.bullets.push(bullet);
             console.log("Bullet created", bullet);
         }
