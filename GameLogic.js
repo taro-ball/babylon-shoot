@@ -14,6 +14,7 @@ export default class GameLogic {
         this.engine = new BABYLON.Engine(this.canvas, true);
         this.scene = new BABYLON.Scene(this.engine);
         this.bullets = []; // Store active bullets
+        this.spaceship = new Spaceship(this.scene, "mySpaceship", new BABYLON.Vector3(0, 0, 0));
         this._init();
     }
 
@@ -36,7 +37,8 @@ export default class GameLogic {
         this.gameGUI = new GameGUI(this.scene); // Initialize your GUI here
 
 
-        const spaceship = new Spaceship(this.scene, "mySpaceship", new BABYLON.Vector3(0, 0, 0));
+        //const spaceship = new Spaceship(this.scene, "mySpaceship", new BABYLON.Vector3(0, 0, 0));
+
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
             //console.log('Canvas clicked');
@@ -49,7 +51,7 @@ export default class GameLogic {
         // Run the render loop
         this.engine.runRenderLoop(() => {
             this.update();
-            spaceship.update();
+            this.spaceship.update();
             this.bullets.forEach(bullet => bullet.update());
             //this.bullets = this.bullets.filter(bullet => bullet.mesh); // Remove disposed bullets
             this.scene.render();
@@ -67,7 +69,11 @@ export default class GameLogic {
             const bulletStartPosition = new BABYLON.Vector3(0, 0, 0); // Starting position of the bullet, adjust as needed
 
             // Create a bullet that aims at the picked target
-            const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, BulletBlueprints.CubeBullet1);
+            //const bullet = new Bullet(this.scene, bulletStartPosition, pickedTarget, BulletBlueprints.CubeBullet1);
+
+            // Use the spaceship's shoot method
+            const bullet = this.spaceship.shoot(pickedTarget);
+
             this.bullets.push(bullet);
             console.log("Bullet created", bullet);
         }

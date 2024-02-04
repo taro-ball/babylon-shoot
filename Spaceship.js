@@ -1,4 +1,6 @@
 import * as BABYLON from '@babylonjs/core';
+import * as BulletBlueprints from './BulletBlueprints.js';
+import { Bullet } from './Bullet.js';
 
 export class Spaceship {
     constructor(scene, name, position) {
@@ -51,10 +53,16 @@ export class Spaceship {
         });
     }
 
+    shoot(target) {
+        const bulletStartPosition = this.mesh.position.clone(); // Start the bullet at the spaceship's position
+        const bullet = new Bullet(this.scene, bulletStartPosition, target, BulletBlueprints.CubeBullet1);
+        return bullet; // Return the bullet so it can be managed by the GameLogic
+    }
+
     update() {
         // Apply acceleration to velocity
         this.velocity.addInPlace(this.acceleration);
-        
+
         // Clamp velocity to max speed
         if (this.velocity.length() > this.maxSpeed) {
             this.velocity.normalize().scaleInPlace(this.maxSpeed);
@@ -65,7 +73,7 @@ export class Spaceship {
 
         // Apply inertia to slow down the spaceship
         this.velocity.scaleInPlace(this.inertia);
-        
+
         // Reset acceleration (optional, if you want acceleration to be applied continuously, remove this line)
         this.acceleration = new BABYLON.Vector3(0, 0, 0);
     }
