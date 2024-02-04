@@ -1,8 +1,9 @@
 // GameLogic.js
+//import * as GUI from '@babylonjs/gui';
 import * as BABYLON from '@babylonjs/core';
-import * as GUI from '@babylonjs/gui';
 import { Inspector } from '@babylonjs/inspector';
-import GameGUI from './GameGUI.js'; // Import GameGUI
+
+import GameGUI from './GameGUI.js';
 import { Bullet, BulletBlueprint } from './Bullet.js';
 
 export default class GameLogic {
@@ -28,7 +29,7 @@ export default class GameLogic {
         // add glow
         this.glowLayer = new BABYLON.GlowLayer("glow", this.scene);
         this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
-        
+
         //Load GUI from GameLogic.js
         this.gameGUI = new GameGUI(this.scene); // Initialize your GUI here
 
@@ -39,8 +40,23 @@ export default class GameLogic {
         });
 
         //Setup
-        this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
-        this.fastBulletBlueprint = new BulletBlueprint('sphere', undefined, 0.02, 0.005, 0.1, 1400);
+        // this.blueBulletBlueprint = new BulletBlueprint('sphere', new BABYLON.Color3(0, 0, 1), 0.02, 0.2, 3400);
+        // this.fastBulletBlueprint = new BulletBlueprint('sphere', undefined, 0.02, 0.005, 0.1, 1400);
+
+        this.fastBulletBlueprint = new BulletBlueprint('sphere', null, 0.02, 0.005, 0.4, 1400, (scene, blueprint) => {
+            let mesh;
+
+            //mesh = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: blueprint.diameter }, scene);
+            mesh = BABYLON.MeshBuilder.CreateBox("bullet", { size: blueprint.diameter }, scene);
+            // Additional shape types can be added here
+
+            let myColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random())
+            let material = new BABYLON.StandardMaterial("bulletMaterial", scene);
+            material.diffuseColor = myColor;
+            material.emissiveColor = myColor;
+            mesh.material = material;
+            return mesh;
+        });
 
         this._createPracticeTargets();
 

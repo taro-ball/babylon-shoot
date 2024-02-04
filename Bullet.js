@@ -1,13 +1,14 @@
 import * as BABYLON from '@babylonjs/core';
 
 export class BulletBlueprint {
-    constructor(shapeType = 'sphere', color = null, speed = 0.1, acceleration = 0.005, diameter = 0.2, lifespan = 1400) {
+    constructor(shapeType = 'sphere', color = null, speed = 0.1, acceleration = 0.005, diameter = 0.2, lifespan = 1400, createShapeFunc) {
         this.shapeType = shapeType;
         this.color = color;
         this.speed = speed;
+        this.acceleration = acceleration;
         this.diameter = diameter;
         this.lifespan = lifespan;
-        this.acceleration = acceleration
+        this.createShapeFunc = createShapeFunc;
     }
 
     loadShapeFromGLX(scene, filePath) {
@@ -30,24 +31,27 @@ export class Bullet {
     }
 
     _init() {
-        if (this.blueprint.shapeType === 'sphere') {
-            this.mesh = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: this.blueprint.diameter }, this.scene);
-        } else if (this.blueprint.shapeType === 'custom') {
-            // Load custom shape from .glx file (if blueprint.shape is a path to a file)
-            this.blueprint.loadShapeFromGLX(this.scene, this.blueprint.shape);
-        }
-        // Additional shape types can be added here
+        // if (this.blueprint.shapeType === 'sphere') {
+        //     this.mesh = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: this.blueprint.diameter }, this.scene);
+        // } else if (this.blueprint.shapeType === 'custom') {
+        //     // Load custom shape from .glx file (if blueprint.shape is a path to a file)
+        //     this.blueprint.loadShapeFromGLX(this.scene, this.blueprint.shape);
+        // }
+        this.mesh = this.blueprint.createShapeFunc(this.scene, this.blueprint);
+        this.mesh.position = this.position;
+
+        // this.color = this.blueprint.color || new BABYLON.Color3(Math.random(), Math.random(), Math.random())
+        // let material = new BABYLON.StandardMaterial("bulletMaterial", this.scene);
+        // material.diffuseColor = this.color;
+        // material.emissiveColor = this.color;
+        // this.mesh.material = material;
 
         // init velocity
         let direction = this.target.position.subtract(this.position).normalize();
         this.velocity.addInPlace(direction.scale(this.blueprint.speed));
 
-        this.mesh.position = this.position;
-        this.color = this.blueprint.color || new BABYLON.Color3(Math.random(), Math.random(), Math.random())
-        let material = new BABYLON.StandardMaterial("bulletMaterial", this.scene);
-        material.diffuseColor = this.color;
-        material.emissiveColor = this.color;
-        this.mesh.material = material;
+
+
     }
 
     update() {
@@ -82,7 +86,6 @@ export class Bullet {
         if (deltaPos > 0) {
             this.explode(); // Dispose of the bullet
         }
-
 
         // const distance = BABYLON.Vector3.Distance(this.mesh.position, this.target.position);
         // const collisionThreshold = 0.2; // Adjust based on your target and bullet size
