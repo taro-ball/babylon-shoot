@@ -5,6 +5,7 @@ import { Inspector } from '@babylonjs/inspector';
 
 import GameGUI from './GameGUI.js';
 import { Bullet } from './Bullet.js';
+import { Spaceship } from './Spaceship.js';
 import * as BulletBlueprints from './BulletBlueprints.js';
 
 export default class GameLogic {
@@ -34,6 +35,8 @@ export default class GameLogic {
         //Load GUI from GameLogic.js
         this.gameGUI = new GameGUI(this.scene); // Initialize your GUI here
 
+
+        const spaceship = new Spaceship(this.scene, "mySpaceship", new BABYLON.Vector3(0, 0, 0));
         // Handle mouse click
         this.canvas.addEventListener('click', (event) => {
             //console.log('Canvas clicked');
@@ -46,6 +49,7 @@ export default class GameLogic {
         // Run the render loop
         this.engine.runRenderLoop(() => {
             this.update();
+            spaceship.update();
             this.bullets.forEach(bullet => bullet.update());
             //this.bullets = this.bullets.filter(bullet => bullet.mesh); // Remove disposed bullets
             this.scene.render();
