@@ -43,7 +43,7 @@ export const CubeBullet1 = new BulletBlueprint(
         scene.beginAnimation(mesh, 0, 15, true);
 
         //Play sound
-        let shootingSound = new BABYLON.Sound("ShootingSound", "assets/pop.mp3", scene, null, {
+        let shootingSound = new BABYLON.Sound("ShootingSound", "pop.mp3", scene, null, {
             autoplay: true,  // automatically start playing
             spatialSound: true  // 3D sound to be played in space (optional)
         });

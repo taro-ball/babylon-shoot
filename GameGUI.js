@@ -9,7 +9,7 @@ export default class GameGUI {
 
     async _initGUI() {
 
-        let loadedGUI = await this.advancedTexture.parseFromURLAsync("GUI/gui1.json");
+        let loadedGUI = await this.advancedTexture.parseFromURLAsync("gui1.json");
 
         let sliderX = this.advancedTexture.getControlByName("RotationXSlider");
         sliderX.onValueChangedObservable.add((value) => {
