@@ -33,6 +33,12 @@ export default class GameLogic {
         this.glowLayer = new BABYLON.GlowLayer("glow", this.scene);
         this.glowLayer.intensity = 1.5; // Adjust the glow intensity to your liking
 
+        this.backgroundMusic = new BABYLON.Sound("BackgroundMusic", "Galactic_Rap.mp3", this.scene, null, {
+            loop: true,
+            autoplay: true,
+            volume: 0.2
+        });
+
         //Load GUI from GameLogic.js
         this.gameGUI = new GameGUI(this.scene); // Initialize your GUI here
 

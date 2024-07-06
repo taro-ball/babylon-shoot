@@ -15,7 +15,7 @@ export default class GameGUI {
         sliderX.onValueChangedObservable.add((value) => {
             //console.log("advancedTexture!", this.advancedTexture);
             let testMesh = this.scene.getNodeByName("box1");
-            testMesh.rotation.x = value / 50;
+                        testMesh.rotation.x = value / 50;
             testMesh.position.x = value / 50;
         });
 
@@ -26,6 +26,12 @@ export default class GameGUI {
             testMesh.rotation.y = value / 50;
             testMesh.position.y = value / 50;
         });
+
+        let sliderZ = this.advancedTexture.getControlByName("RotationZSlider");
+        sliderY.onValueChangedObservable.add((value) => {
+            let testMesh = this.scene.getS
+        });
+
 
         let mainPanel = this.advancedTexture.getControlByName("Panel");
         mainPanel.isVisible = 0; //hide main pannel
@@ -43,7 +49,7 @@ export default class GameGUI {
         button.verticalAlignment = "top"
 
         this.advancedTexture.addControl(button);
-        
+
         button.onPointerUpObservable.add(function () {
             mainPanel.isVisible = mainPanel.isVisible === 1 ? 0 : 1;
         });
