@@ -1,4 +1,5 @@
-A simple project to test projectile mechanics and GUI elements in babylon.js
+A simple project to test projectile mechanics and GUI elements in babylon.js.
+
 Inspired by https://github.com/WaelYasmina/babylontut
 
 ## Game controls
