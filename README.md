@@ -1,3 +1,6 @@
+A simple project to test projectile mechanics and GUI elements in babylon.js
+Inspired by https://github.com/WaelYasmina/babylontut
+
 ## Game controls
 - Open the demo on https://taro-ball.github.io/babylon-shoot/ 😁
 - Click on the big cubes to shoot bullets at them. Press W-S-A-D keys to move the ship.
