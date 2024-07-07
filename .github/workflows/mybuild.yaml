@@ -3,7 +3,7 @@ name: Build and Deploy SPA
 on:
   push:
     branches:
-      - main  # or the branch you want to deploy from
+      - main
 
 jobs:
   build:
@@ -26,8 +26,11 @@ jobs:
     - name: Build the project
       run: npm run build
 
+    - name: List build directory contents
+      run: ls -l ./dist
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build  # or the directory where your build files are
+        publish_dir: ./dist  # build files
