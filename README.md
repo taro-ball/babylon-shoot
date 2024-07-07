@@ -1,7 +1,7 @@
 ## Game controls
 - Open the demo on https://taro-ball.github.io/babylon-shoot/ 😁
-- Click on the big cubes to shoot bullets at them
-- Use mouse to drag the camera and scroll to zoom. Press W-S-A-D keys to move the ship.
+- Click on the big cubes to shoot bullets at them. Press W-S-A-D keys to move the ship.
+- Use mouse to drag the camera and scroll to zoom. 
 
 ## Build instructions
 1. Clone repository
